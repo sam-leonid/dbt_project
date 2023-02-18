@@ -41,6 +41,7 @@ models:
           materialized: table
 vars:
   payment_type_values: [1, 2, 3, 4, 5, 6]
+  pickup_datetime_values: [2019, 2020]
 
 seeds: 
     taxi_rides_ny:
