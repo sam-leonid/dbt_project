@@ -19,7 +19,6 @@ select
     cast(pickup_datetime as timestamp) as pickup_datetime,
     cast(dropOff_datetime as timestamp) as dropoff_datetime,
 from tripdata
-where rn = 1 
 
 
 -- dbt build --m <model.sql> --var 'is_test_run: false'
