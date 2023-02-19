@@ -1,13 +1,22 @@
-{{ config(materialized='view') }}
+
+
+  create or replace view `zoom-camp-hw3`.`dbt_lsamortsev`.`stg_fhv_tripdata`
+  OPTIONS()
+  as 
 
 with tripdata as 
 (
   select *,
     row_number() over(partition by pickup_datetime) as rn
-  from {{ source('staging','fhv_tripdata') }}
+  from `zoom-camp-hw3`.`trips_data_all`.`fhv_tripdata`
 )
 select
     -- identifiers
+    to_hex(md5(cast(coalesce(cast(pickup_datetime as 
+    string
+), '') as 
+    string
+))) as tripid,
     cast(PUlocationID as integer) as  pickup_locationid,
     cast(DOlocationID as integer) as dropoff_locationid,
     cast(dispatching_base_num as string) as dispatching_base_num,
@@ -21,8 +30,5 @@ from tripdata
 
 
 -- dbt build --m <model.sql> --var 'is_test_run: false'
-{% if var('is_test_run', default=true) %}
+;
 
-  limit 100
-
-{% endif %}
